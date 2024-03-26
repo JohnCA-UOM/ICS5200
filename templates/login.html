@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body style="margin: 0px;">
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/login.css') }}" />
+    <div class="login-container">
+      <div class="login-container01"></div>
+       <div class="login-teacher-details-container">
+           <div class="login-passwordheader">
+                <h1>Enter Password:</h1>
+           </div>
+           <div class="login-passwordinput">
+                <input type="text" id="password_input" placeholder="Password" class="login-password input" autocomplete="off"/>
+           </div>
+       </div>
+      <div class="login-container2">
+          <div id="infoBox" class="info-box hidden">
+              <div id="infoBoxTextDiv" class="info-box-text-container">
+                <p id="infoBoxText" style="font-family: 'Verdana'"></p>
+              </div>
+              <div id="infoBoxButtonDiv" class="info-box-button-container">
+                <button onclick="hideInfoBox()">Close</button>
+              </div>
+          </div>
+      </div>
+      <div class="login-containerbutton">
+        <button type="button" id='login_button' onclick='login_to_sim()' class="login-button button">
+            <span>
+                <span>Login</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="login-container01"></div>
+    </div>
+  </div>
+  <script>
+      var password_input = document.getElementById('password_input');
+      var login_button = document.getElementById('login_button');
+
+      let infoBox = document.getElementById('infoBox');
+      let infoBoxText = document.getElementById('infoBoxText');
+
+      document.addEventListener('DOMContentLoaded', function() {
+          login_button.disabled = true;
+
+          function updateButtonState() {
+              if (password_input.value !== '') {
+                  login_button.disabled = false; // Enable the button
+              } else {
+                  login_button.disabled = true;  // Disable the button
+              }
+          }
+
+          if (password_input.value !== '') {
+              login_button.disabled = false;
+          } else {
+              login_button.disabled = true;
+          }
+
+          // Add event listeners for 'input' event
+          password_input.addEventListener('input', updateButtonState);
+      });
+
+      function login_to_sim() {
+
+            const teacher_login_input = JSON.stringify({"password": password_input.value})
+
+            fetch('/check_login_pass', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: teacher_login_input
+            }).then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        showInfoBox(data.message);
+                    });
+                }
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    console.log("Response received, but no redirect.");
+                }
+
+            }).then(data => {
+            }).catch(error => {
+                  console.error('Error:', error);
+            });
+      }
+
+      function showInfoBox(message) {
+            infoBox.style.display = 'flex';
+            infoBoxText.textContent = message;
+      }
+
+      function hideInfoBox() {
+            infoBox.style.display = 'none';
+      }
+  </script>
+</body>
+</html>

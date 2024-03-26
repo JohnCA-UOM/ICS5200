@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body style="margin: 0px;">
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/phase_select_page.css') }}" />
+    <div class="mainpage-container">
+      <div class="mainpage-container01"></div>
+      <div class="mainpage-containerbutton">
+        <button type="button" id='class_simulation_button' onclick='go_to_main_menu()' class="mainpage-start-button button">
+            <span>
+                <span>Deliver Lesson</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="mainpage-container2"> </div>
+      <div class="mainpage-containerbutton">
+        <button type="button" id='review_button' onclick='go_to_review_page()' class="mainpage-start-button button">
+            <span>
+                <span>Review Lesson</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="mainpage-container01"></div>
+    </div>
+  </div>
+  <script>
+      var class_simulation_button = document.getElementById('class_simulation_button');
+      var review_button = document.getElementById('review_button');
+
+      function go_to_main_menu() {
+          const url = `/choose_phase/lesson`;
+
+          fetch(url, {
+              method: 'GET'
+          }).then(response => {
+              if (response.redirected) {
+                  window.location.href = response.url;
+              } else {
+                  console.log("Response received, but no redirect.");
+              }
+          })
+          .then(data => {
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+      }
+
+      function go_to_review_page() {
+          const url = `/choose_phase/review`;
+
+          fetch(url, {
+              method: 'GET'
+          }).then(response => {
+              if (response.redirected) {
+                  window.location.href = response.url;
+              } else {
+                  console.log("Response received, but no redirect.");
+              }
+          })
+          .then(data => {
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+
+      }
+  </script>
+</body>
+</html>

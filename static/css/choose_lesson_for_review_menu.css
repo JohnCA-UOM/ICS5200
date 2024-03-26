@@ -1,0 +1,182 @@
+.container {
+  height: inherit
+  width: inherit;
+  display: flex;
+  overflow: auto;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  align-items: center;
+  border-width: 0px;
+  flex-direction: column;
+  justify-content: center;
+  background-image: url(../img/background_big.png);
+}
+.container01 {
+  flex: 1;
+  width: 100%;
+  border: 2px rgba(120, 120, 120, 0.4);
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+}
+.containerbutton {
+  width: inherit;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.start-button {
+  width: 189px;
+  height: 69px;
+  align-self: center;
+  font-family: "Verdana";
+}
+
+.container2 {
+  flex: 0.5;
+  width: 100%;
+  border: 2px rgba(120, 120, 120, 0.4);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.teacher-details-container {
+    display: grid;
+    place-items: center;
+    grid-template-columns: 1fr; /* Two columns: one for labels, one for input boxes */
+    gap: 10px;
+}
+
+.lessonreviewheader {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  font-family: "Verdana";
+  font-weight: 700;
+}
+
+.text02 {
+  font-size: 30px;
+  font-family: "Verdana";
+}
+
+.reviewlessondiv {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Verdana";
+  font-weight: 700;
+}
+
+
+
+.option-reviewlessons {
+  text-align: center;
+  padding: 10px 0;
+  font-family: "Verdana";
+}
+
+.info-box {
+    display: none;
+    flex-direction: column;
+    border: 1px solid #D0312D;
+    background-color: #ffebeb;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    height: 100%;
+    box-sizing: border-box;
+    justify-content: space-between;
+    position: absolute;
+    height: fit-content;
+}
+
+.info-box.visible {
+    display:n flex;
+}
+
+.info-box-button-container {
+  display: flex;
+  width: inherit;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.info-box-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+}
+
+
+.mainpage-textinput {
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+  align-self: center;
+  font-family: "Verdana";
+}
+
+.reviewlessonsdropdown {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 10px 0;
+  font-family: "Verdana";
+}
+
+.mainpage-teacher-details-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns: one for labels, one for input boxes */
+    gap: 10px; /* Space between grid items */
+    /* Adjust other styling as necessary */
+    padding-top: 50px;
+}
+
+.mainpage-teachergenderinput {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: right;
+  font-family: "Verdana";
+}
+
+.mainpage-teachergenderdropdown {
+  flex: 0 0 auto;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: right;
+  text-align: center;
+  padding: 10px 0;
+  font-family: "Verdana";
+}
+
+.option-gender {
+  text-align: center;
+  padding: 10px 0;
+  font-family: "Verdana";
+}
+
+
+.mainpage-text02 {
+  font-size: 30px;
+  font-family: "Verdana";
+}

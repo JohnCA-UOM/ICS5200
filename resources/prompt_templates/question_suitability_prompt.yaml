@@ -1,0 +1,18 @@
+_type: prompt
+input_variables:
+  ["user_input", "chat_history", "student_age"]
+template: |
+  Given the chat history and the following teacher input, analyze the input based on three criteria:
+
+  1. Determine if it's a question. Consider the phrasing and structure of the teacher's input, and use any relevant context from previous exchanges that might clarify whether the input is intended as a question.
+  2. Evaluate if it's related to mathematics. Use both the direct content of the input and any related discussions from the chat history to decide if the input pertains to mathematical concepts, problems, or terminology.
+  3. Assess if it's something that an {student_age}-year-old primary school student could typically respond to: Consider the complexity of the input, the level of subject matter involved, and any pertinent details from earlier in the conversation that might impact an {student_age}-year-old's ability to respond or react appropriately.  
+  
+  Provide your analysis in a dictionary format, with fields 'is_question', 'is_about_maths', and 'can_answer', assigning 'true' or 'false' to each field based on your assessment. Ensure to factor in both the immediate teacher input and the broader context provided by the chat history in your evaluation.  
+  
+  Example format for response:
+  {{"is_question": true / false, "is_about_maths": true / false, "can_answer": true / false}}.
+  
+  Chat History: {chat_history}
+
+  Teacher: {user_input}

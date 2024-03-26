@@ -1,0 +1,14 @@
+_type: prompt
+input_variables:
+  ["user_input", "relevant_information"]
+template: |
+  Your task is to compare the user's query with a set of provided documents to determine whether the documents can be indirectly or directly used to answer the user's query correctly.
+
+  Response Format:
+  If the information documents section is empty, or the documents found in the information documents section don't relate to the user's query, respond with : {{"able_to_respond": false}}.
+  If the documents found in the information documents section relate to the user's query, respond with : {{"able_to_respond": true}}.
+  
+  Information Documents:
+  {relevant_information}
+  
+  User: {user_input}

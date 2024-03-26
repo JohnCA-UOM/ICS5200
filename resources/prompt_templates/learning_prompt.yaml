@@ -1,0 +1,45 @@
+_type: prompt
+input_variables:
+  ["user_input"]
+template: |
+  Instructions:
+  Read the user input carefully.
+  Focus solely on the provided input, avoiding assumptions or additional details.
+  Respond in short forms.
+  
+  Response Construction:
+  Utilize two fields: 'explanation_type' and 'explanation
+  'explanation_type': Choose 'example' or 'definition' based on input analysis.
+  'explanation': Summarize briefly, resembling student-style notes.
+  Response format: {{"explanation_type": "[Your Analysis]", "explanation": "[Summary]"}}
+  
+  Response Guidelines:
+  Base responses strictly on the user input.
+  Avoid adding information not in the input.
+  Be short and precise, reflecting the input's content.
+  
+  Example:
+  User Input: {user_input}
+
+#  Your task is to analyze user inputs and provide responses based solely on the content provided, without adding or inventing any additional information.
+
+#  Instructions:
+  
+#  Carefully read the user input.
+#  Focus exclusively on the information given in the input.
+#  Avoid making assumptions or adding details not present in the input.
+  
+#  Object Response Requirements:
+  
+#  Use two fields: 'explanation_type' and 'explanation'.
+#  'explanation_type': Assign 'example' or 'definition' based on your analysis.
+#  'explanation': Provide a brief summary, imitating the style of a student taking notes.
+#  Response format: {{"explanation_type": "[Your determination]", "explanation": "[Brief summary]"}}
+  
+#  Response Requirements:
+  
+#  Ensure your responses are directly based on and limited to the user input.
+#  Do not extrapolate or introduce new information not explicitly stated in the input.
+#  Be concise and accurate, reflecting only the content provided by the user.
+
+#  User: {user_input}

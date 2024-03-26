@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body style="margin: 0px;">
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/write_review.css') }}" />
+    <div class="container">
+      <div class="container01"></div>
+       <div class="teacher-details-container">
+           <div class="lessonreviewheader">
+                <h1>Write your review of the Teacher's Lesson Delivery:</h1>
+           </div>
+           <div class='reviewlessondiv'>
+               <form>
+                    <br/>
+                        <!-- Increase rows and cols as needed to accommodate larger text -->
+                        <textarea id="review_text" style="resize: none;" name="large-text" rows="10" cols="100"></textarea>
+                    <br/>
+               </form>
+               <!--
+               <div style="width: 70%; height: 100px;">
+                    <input type="text" id="review_text" placeholder="Enter Review Here" class="mainpage-textinput input" autocomplete="off"/>
+               </div>
+               -->
+           </div>
+       </div>
+      <div class="container2">
+          <div id="infoBox" class="info-box hidden">
+              <div id="infoBoxTextDiv" class="info-box-text-container">
+                <p id="infoBoxText" style="font-family: 'Verdana'"></p>
+              </div>
+              <div id="infoBoxButtonDiv" class="info-box-button-container">
+                <button onclick="hideInfoBox()">Close</button>
+              </div>
+          </div>
+      </div>
+      <div class="containerbutton">
+        <button type="button" id='submit_review' onclick='submit_review()' class="start-button button">
+            <span>
+                <span>Submit Review</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="container01"></div>
+    </div>
+  </div>
+  <script>
+      var teacher_review_text = document.getElementById('review_text');
+      var submit_review_button = document.getElementById('submit_review');
+
+      let infoBox = document.getElementById('infoBox');
+      let infoBoxText = document.getElementById('infoBoxText');
+
+      document.addEventListener('DOMContentLoaded', function() {
+          submit_review_button.disabled = true;
+
+          function updateButtonState() {
+              if (teacher_review_text.value !== '') {
+                  submit_review_button.disabled = false; // Enable the button
+              } else {
+                  submit_review_button.disabled = true;  // Disable the button
+              }
+          }
+
+          if (teacher_review_text.value !== '') {
+              submit_review_button.disabled = false;
+          } else {
+              submit_review_button.disabled = true;
+          }
+
+          teacher_review_text.addEventListener('input', updateButtonState);
+      });
+
+      function submit_review() {
+          const teacher_review_json = JSON.stringify({"teacher_review_text": teacher_review_text.value});
+
+          fetch('/submit_review', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: teacher_review_json
+          }).then(response => {
+              console.log(response);
+
+              if (!response.ok) {
+                 return response.json().then(data => {
+                     console.log(data);
+                     showInfoBox(data.message);
+                 });
+              }
+
+              if (response.redirected) {
+                  window.location.href = response.url;
+              } else {
+                  // Handle non-redirect responses if needed
+                  console.log("Response received, but no redirect.");
+              }
+          }).then(data => {
+
+          }).catch(error => {
+              console.error('Error:', error);
+          });
+      }
+
+      function showInfoBox(message) {
+            infoBox.style.display = 'flex';
+            infoBoxText.textContent = message;
+      }
+
+      function hideInfoBox() {
+            infoBox.style.display = 'none';
+      }
+  </script>
+</body>
+</html>

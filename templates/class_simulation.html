@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head></head>
+<body style="margin: 0px;">
+  <div id="overlay" style="display: none;">
+    <div class="overlay-div">
+      <button id="continueButton" class="overlay-button" onclick="pause_or_continue_game()">Continue Lesson</button>
+    </div>
+    <div class="overlay-div">
+      <button id="endLessonButton" class="overlay-button" onclick="end_lesson()">End Lesson</button>
+    </div>
+  </div>
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/class_simulation.css') }}" />
+    <div class="classsimulation-container">
+      <div id='student_details_box' class="classsimulation-container01">
+        <div class="classsimulation-header-container">
+          <h1 id="student_name" class="classsimulation-heading">{{name}}</h1>
+        </div>
+        <div class="classsimulation-student-details">
+          <ul class="classsimulation-ul list">
+            <li id="age" class="classsimulation-li list-item">
+              <span class="classsimulation-text">Age: {{age}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="gender" class="classsimulation-text">Gender: {{gender}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="enjoyment" class="classsimulation-text">Enjoyment: {{enjoyment}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="anger" class="classsimulation-text">Anger: {{anger}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="boredom" class="classsimulation-text">Boredom: {{boredom}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="anxiety" class="classsimulation-text">Anxiety: {{anxiety}}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="classsimulation-student-characteristics">
+          <ul class="classsimulation-ul list">
+            <li class="classsimulation-li list-item">
+              <span id="creativity" class="classsimulation-text">Creativity: {{creativity}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="curiosity" class="classsimulation-text">Curiosity: {{curiosity}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="tolerance" class="classsimulation-text">Tolerance: {{tolerance}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="persistence" class="classsimulation-text">Persistence: {{persistence}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="responsibility" class="classsimulation-text">Responsibility: {{responsibility}}</span>
+            </li>
+            <li class="classsimulation-li list-item">
+              <span id="selfcontrol" class="classsimulation-text">Self Control: {{selfcontrol}}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id='class_panel' class = "classsimulation-main_ui">
+        <div class="classsimulation-container03">
+          <div class="classsimulation-container04"></div>
+          <div class="classsimulation-teacher-container"></div>
+          <div class="classsimulation-grid-container">
+            <div id='female_teacher' style="background-image: url({{ url_for('static', filename='img/teacher_female_standing.png') }})" class="classsimulation-teacher-grid"></div>
+            <div id='male_teacher' style="background-image: url({{ url_for('static', filename='img/teacher_male_standing.png') }})" class="classsimulation-teacher-grid"></div>
+            <div style="grid-area: 2 / 2 / span 1/ span 1;" class="emoticon-image-container">
+              <img src="../static/img/student_emoticons/transparent.png" class="emoticon-image">
+            </div>
+            <div style="grid-area: 2 / 3 / span 1/ span 1;" class="emoticon-image-container">
+              <img src="../static/img/student_emoticons/transparent.png" class="emoticon-image">
+            </div>
+            <div style="grid-area: 2 / 8 / span 1/ span 1;" class="emoticon-image-container">
+              <img src="../static/img/student_emoticons/transparent.png" class="emoticon-image">
+            </div>
+            <div style="grid-area: 2 / 9 / span 1/ span 1;" class="emoticon-image-container">
+              <img src="../static/img/student_emoticons/transparent.png" class="emoticon-image">
+            </div>
+            <div style="grid-area: 4 / 5 / span 1/ span 1;" class="emoticon-image-container">
+              <img src="../static/img/student_emoticons/transparent.png" class="emoticon-image">
+            </div>
+            <div style="grid-area: 4 / 6 / span 1/ span 1;" class="emoticon-image-container">
+              <img src="../static/img/student_emoticons/transparent.png" class="emoticon-image">
+            </div>
+            <div style="grid-area: 3 / 2 / span 1/ span 1;">
+              <button type="button" style='border-color: #30351C;' class="classsimulation-student-button button" data-number = 0 onclick="get_student_details(this)"></button>
+            </div>
+            <div style="grid-area: 3 / 3 / span 1/ span 1;">
+              <button type="button" style='border-color: #D9C5B2;' class="classsimulation-student-button button" data-number = 1 onclick="get_student_details(this)"></button>
+            </div>
+            <div style="grid-area: 3 / 8 / span 1/ span 1;">
+              <button type="button" style='border-color: #519E8A;' class="classsimulation-student-button button" data-number = 2 onclick="get_student_details(this)"></button>
+            </div>
+            <div style="grid-area: 3 / 9 / span 1/ span 1;">
+              <button type="button" style='border-color: #564787;' class="classsimulation-student-button button" data-number = 3 onclick="get_student_details(this)"></button>
+            </div>
+            <div style="grid-area: 5 / 5 / span 1/ span 1;">
+              <button type="button" style='border-color: #90B800;' class="classsimulation-student-button button" data-number = 4 onclick="get_student_details(this)"></button>
+            </div>
+            <div style="grid-area: 5 / 6 / span 1/ span 1;">
+              <button type="button" style='border-color: #080C0A;' class="classsimulation-student-button button" data-number = 5 onclick="get_student_details(this)"></button>
+            </div>
+          </div>
+          <div class="classsimulation-container18">
+            <div id="infoBox" class="info-box hidden">
+                <div id="infoBoxTextDiv" class="info-box-text-container">
+                  <p id="infoBoxText" style="font-family: 'Verdana'"></p>
+                </div>
+                <div id="infoBoxButtonDiv" class="info-box-button-container">
+                  <button onclick="hideInfoBox()">Close</button>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="classsimulation-pausebutton-container">
+          <button class="pause-button" onclick="pause_or_continue_game()">Pause</button>
+        </div>
+      </div>
+      <div id='chat_panel' class="classsimulation-container31">
+        <div class="classsimulation-container32">
+          <div class="classsimulation-container33">
+            <div id="chat-history-overlay" class="overlay-chat-history">
+              <p class="overlay-content-chat-history">Wait a moment, your input is being processed</p>
+            </div>
+            <ul id='chat_history' class="classsimulation-chat-history"></ul>
+          </div>
+          <div class="classsimulation-container34">
+            <!--textarea placeholder="Talk to Students from here!" autocomplete="off" class="classsimulation-textinput" rows="1"  id="user_input" onkeydown="talk_to_class_on_enter()"></textarea-->
+            <input type="text" placeholder="Talk to Students from here!" autocomplete="off" class="classsimulation-textinput input" id="user_input" onkeydown="talk_to_class_on_enter()"/>
+          </div>
+          <div class="classsimulation-container34">
+            <select id="student-dropdown" class='classsimulation-student-choice-dropdown dropdown' name="Student">
+              <option class='option-gender' value="" disabled selected>Talk to</option>
+              <option class='option-gender' value="Whole Class">Whole Class</option>
+              <option class='option-gender' value="Jeremy">Jeremy</option>
+              <option class='option-gender' value="Lily">Lily</option>
+              <option class='option-gender' value="Emma">Emma</option>
+              <option class='option-gender' value="Max">Max</option>
+              <option class='option-gender' value="Lisa">Lisa</option>
+              <option class='option-gender' value="Josh">Josh</option>
+            </select>
+          </div>
+          <div class="classsimulation-container34">
+            <select id="action-dropdown" class='classsimulation-action-choice-dropdown dropdown' name="Action">
+              <option class='option-gender' value="" disabled selected>Choose Action</option>
+              <option class='option-gender' value="conversing_with_student">Conversing with Students</option>
+              <option class='option-gender' value="assessing_student_knowledge">Assessing Student Knowledge</option>
+              <option class='option-gender' value="setting_learning_goals">Setting Learning Goals</option>
+              <option class='option-gender' value="clarifying_learning_intentions">Clarifying Learning Intentions</option>
+              <option class='option-gender' value="establishing_success_criteria">Establishing Success Criteria</option>
+              <option class='option-gender' value="assessing_student_knowledge">Facilitating Learning Activities</option>
+              <option class='option-gender' value="providing_feedback">Providing Feedback</option>
+              <option class='option-gender' value="summarizing_key_points">Summarizing Key Points</option>
+            </select>
+          </div>
+          <div class="classsimulation-container34">
+            <button type="button" id="talk_to_class_button" class="classsimulation-submitbutton button" onclick="talk_to_class()">
+              <span>Submit</span><br />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+        let student_name = document.getElementById('student_name');
+        let age = document.getElementById('age');
+        let gender = document.getElementById('gender');
+        let enjoyment = document.getElementById('enjoyment');
+        let anger = document.getElementById('anger');
+        let boredom = document.getElementById('boredom');
+        let anxiety = document.getElementById('anxiety');
+        let creativity = document.getElementById('creativity');
+        let curiosity = document.getElementById('curiosity');
+        let tolerance = document.getElementById('tolerance');
+        let persistence = document.getElementById('persistence');
+        let responsibility = document.getElementById('responsibility');
+        let selfcontrol = document.getElementById('selfcontrol');
+
+        let chat_history_overlay = document.getElementById('chat-history-overlay');
+        let chat_history_box = document.getElementById('chat_history');
+        let talk_to_class_button = document.getElementById('talk_to_class_button');
+        let user_input_box = document.getElementById('user_input');
+        let student_choice_dropdown = document.getElementById('student-dropdown');
+        let action_choice_dropdown = document.getElementById('action-dropdown');
+
+        let continue_button = document.getElementById('continueButton');
+        let menu_button = document.getElementById('menuButton');
+        let end_lesson_button = document.getElementById('endLessonButton');
+        let overlay = document.getElementById('overlay');
+
+        let infoBox = document.getElementById('infoBox');
+        let infoBoxText = document.getElementById('infoBoxText');
+
+        let current_button_selected = {{ current_student_value|tojson }};
+
+        var female_icon = document.getElementById('female_teacher');
+        var male_icon = document.getElementById('male_teacher');
+        var student_buttons = document.querySelectorAll('.classsimulation-student-button');
+        var student_emoticons = document.querySelectorAll('.emoticon-image');
+
+        var container = document.getElementById('student_details_box');
+        var class_panel = document.getElementById('class_panel');
+        var chat_panel = document.getElementById('chat_panel');
+        var chat_history_panel = document.getElementById('chat_history');
+
+        let numberToColor = {
+            0: "#30351C",
+            1: "#D9C5B2",
+            2: "#519E8A",
+            3: "#564787",
+            4: "#90B800",
+            5: "#080C0A",
+            10: "white"
+        };
+
+        window.onresize = handleResize;
+
+        function handleResize() {
+            var myVariable = '{{ chat_history|tojson }}';
+            var myVariableArray;
+
+            try {
+                myVariableArray = JSON.parse(myVariable);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+            }
+
+            chat_panel.style.maxWidth = window.innerWidth / 4 + 'px';
+
+            student_name.style.fontSize = (container.offsetHeight) * 0.04 + 'px';
+
+            age.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            gender.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            enjoyment.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            anger.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            boredom.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            anxiety.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+
+            creativity.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            curiosity.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            tolerance.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            persistence.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            responsibility.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+            selfcontrol.style.fontSize = (container.offsetHeight) * 0.03 + 'px';
+        }
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+
+            chat_panel.style.maxWidth = window.innerWidth / 4 + 'px';
+
+            student_talking_to = JSON.parse('{{ current_student_talking_to|tojson }}');
+            action_chosen = JSON.parse('{{ current_action_chosen|tojson }}');
+            teacher_gender = JSON.parse('{{ teacher_gender|tojson }}');
+
+            if(teacher_gender == 'male') {
+                female_icon.style.display = 'none';
+            } else {
+                male_icon.style.display = 'none';
+            }
+
+            student_choice_dropdown.value = student_talking_to;
+            action_choice_dropdown.value = action_chosen;
+
+            if(user_input_box.value !== "" && student_choice_dropdown.value !== '' && action_choice_dropdown.value !== '') {
+                talk_to_class_button.disabled = false;
+            } else {
+                talk_to_class_button.disabled = true;
+            }
+
+            function updateButtonState() {
+                if (user_input_box.value !== "" && student_choice_dropdown.value !== '' && action_choice_dropdown.value !== '') {
+                    talk_to_class_button.disabled = false; // Enable the button
+                } else {
+                    talk_to_class_button.disabled = true;  // Disable the button
+                }
+            }
+
+            // Add event listeners for 'input' event
+            user_input_box.addEventListener('input', updateButtonState);
+            student_choice_dropdown.addEventListener('change', updateButtonState);
+            action_choice_dropdown.addEventListener('change', updateButtonState);
+
+            student_buttons.forEach(function(btn) {
+                  btn.style.backgroundColor = 'transparent';
+                  btn.parentElement.style.backgroundColor = 'transparent';
+              });
+
+            var chat_history = '{{ chat_history|tojson }}'; // Getting the variable from Flask
+            var chat_history_array;
+
+            clearChatHistory();
+
+            try {
+                chat_history_array = JSON.parse(chat_history);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+            }
+
+            fillChatHistory(chat_history_array); // Call the function with the variable
+
+            var agent_emoticons = '{{ agent_emoticons|tojson }}';
+            var agent_emoticons_array;
+
+            try {
+                agent_emoticons_array = JSON.parse(agent_emoticons);
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+            }
+
+            enable_emoticons(agent_emoticons_array);
+
+            if (current_button_selected != -1) {
+                student_buttons[current_button_selected].style.backgroundColor = numberToColor[current_button_selected];
+                student_buttons[current_button_selected].parentElement.style.backgroundColor = numberToColor[current_button_selected];
+            }
+
+            handleResize()
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                pause_or_continue_game();
+            }
+        });
+
+        function pause_or_continue_game() {
+            if (overlay.style.display == 'flex') {
+                overlay.style.display = 'none';
+            } else {
+                // Show the overlay
+                overlay.style.display = 'flex';
+            }
+        }
+
+        function change_state_to_main_menu() {
+            fetch('/stop_class_sim_from_pause', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    // Handle non-redirect responses if needed
+                    console.log("Response received, but no redirect.");
+                }
+            }).catch(error => {
+                  console.error('Error:', error);
+            });
+        };
+
+        function end_lesson() {
+            fetch('/end_lesson', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({})
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    // Handle non-redirect responses if needed
+                    console.log("Response received, but no redirect.");
+                }
+            }).catch(error => {
+                  console.error('Error:', error);
+            });
+        }
+
+        function talk_to_class_on_enter() {
+            if(event.key === 'Enter') {
+                if (!talk_to_class_button.disabled){
+                    talk_to_class();
+                }
+                else {
+                    console.log('Tried to talk to class, disabled');
+                }
+            }
+        }
+
+        function adjustListHeight() {
+            var listItems = chat_history_box.getElementsByTagName('li');
+
+            // Calculate the total height of the list items
+            var totalHeight = 0;
+            for (var i = 0; i < listItems.length; i++) {
+                totalHeight += listItems[i].offsetHeight;
+            }
+
+            // Check if the total height exceeds the ul height and remove the top item if necessary
+            /*
+            while ((chat_history_box.offsetHeight - 20) < totalHeight && listItems.length > 0) {
+                chat_history_box.removeChild(listItems[0]);
+                totalHeight = 0;
+                for (var i = 0; i < listItems.length; i++) {
+                    totalHeight += listItems[i].offsetHeight;
+                }
+            }*/
+        }
+
+
+
+        function clearChatHistory() {
+
+            // Remove all children from the list
+            while (chat_history_box.firstChild) {
+                chat_history_box.removeChild(chat_history_box.firstChild);
+            }
+        }
+
+        function updateListWithNewItem(newItemText, color) {
+
+            // Add new item at the end
+            var newItem = document.createElement('li');
+            newItem.className = "classsimulation-chathistory-li";
+            newItem.textContent = newItemText;
+            newItem.style.color = color;
+
+            // Add new item at the beginning
+            if (chat_history_box.firstChild) {
+                chat_history_box.insertBefore(newItem, chat_history_box.firstChild);
+            } else {
+                chat_history_box.appendChild(newItem);
+            }
+
+            adjustListHeight();
+        }
+
+        function fillChatHistory(messages) {
+            for (var i = 0; i < messages.length; i++) {
+                updateListWithNewItem(messages[i]['text'], numberToColor[messages[i]['student_num']]);
+            }
+        }
+
+        function talk_to_class() {
+            const userInput = user_input_box.value;
+            const talking_to_choice = student_choice_dropdown.value;
+            const action_choice = action_choice_dropdown.value;
+
+            const user_input_json = JSON.stringify({"user_input": userInput, "talking_to_choice": talking_to_choice, "action_choice": action_choice})
+
+            if (userInput.trim() === '') {
+                return; // Don't add empty messages
+            }
+
+            user_input_box.disabled = true;
+            talk_to_class_button.disabled = true;
+            student_choice_dropdown.disabled = true;
+            action_choice_dropdown.disabled = true;
+            chat_history_overlay.style.display = 'flex';
+
+            fetch('/talk_to_class', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: user_input_json
+            }).then(response => {
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    return response.json();
+                }
+            }).then(data => {
+                  if(data.ok) {
+                      new_agent_emoticons = data['resp_data']['new_agent_emoticons'];
+                      new_text = data['resp_data']['new_text'];
+
+                      updateListWithNewItem('Teacher: ' + userInput, 'white');
+
+                      for (var i = 0; i < new_text.length; i++) {
+                          updateListWithNewItem(new_text[i]['text'], numberToColor[new_text[i]['student_num']]);
+                      }
+
+                      enable_emoticons(new_agent_emoticons);
+                  }
+                  else {
+                      let arrayOfNulls = Array(5).fill(null);
+
+                      enable_emoticons(arrayOfNulls);
+
+                      showInfoBox(data.message);
+                  }
+            }).catch(error => {
+                  console.error('Error:', error);
+            }).finally(() => {
+                user_input_box.value = '';
+                user_input_box.disabled = false;
+                talk_to_class_button.disabled = false;
+                student_choice_dropdown.disabled = false;
+                action_choice_dropdown.disabled = false;
+                chat_history_overlay.style.display = 'none';
+            });
+        }
+
+        function get_student_details(button) {
+
+              student_buttons.forEach(function(btn) {
+                  btn.style.backgroundColor = 'transparent';
+                  btn.parentElement.style.backgroundColor = 'transparent';
+              });
+
+              var data_number = button.getAttribute('data-number');
+
+              if (data_number == current_button_selected) {
+                  student_name.textContent = 'Student Name'
+                  age.textContent = `Age:`;
+                  gender.textContent = `Gender:`;
+                  enjoyment.textContent = `Enjoyment:`;
+                  anger.textContent = `Anger:`;
+                  boredom.textContent = `Boredom:`;
+                  anxiety.textContent = `Anxiety:`;
+                  creativity.textContent = `Creativity:`;
+                  curiosity.textContent = `Curiosity:`;
+                  tolerance.textContent = `Tolerance:`;
+                  persistence.textContent = `Persistence:`;
+                  responsibility.textContent = `Responsibility:`;
+                  selfcontrol.textContent = `Self Control:`;
+
+                  current_button_selected = -1;
+
+                  const url = `/get_student_details/${data_number}`;
+
+                  fetch(url, {
+                      method: 'GET'
+                  }).then(response => response.json())
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+              } else {
+                  button.style.backgroundColor = numberToColor[data_number];
+                  button.parentElement.style.backgroundColor = numberToColor[data_number];
+
+                  current_button_selected = data_number;
+
+                  const url = `/get_student_details/${data_number}`;
+
+                  fetch(url, {
+                      method: 'GET'
+                  }).then(response => response.json())
+                  .then(data => {
+                      if(data['age'] == undefined) {
+                          student_name.textContent = 'Student Name'
+                          age.textContent = `Age:`;
+                          gender.textContent = `Gender:`;
+                          enjoyment.textContent = `Enjoyment:`;
+                          anger.textContent = `Anger:`;
+                          boredom.textContent = `Boredom:`;
+                          anxiety.textContent = `Anxiety:`;
+                          creativity.textContent = `Creativity:`;
+                          curiosity.textContent = `Curiosity:`;
+                          tolerance.textContent = `Tolerance:`;
+                          persistence.textContent = `Persistence:`;
+                          responsibility.textContent = `Responsibility:`;
+                          selfcontrol.textContent = `Self Control:`;
+                      } else {
+                          student_name.textContent = data['name']
+                          age.textContent = `Age: ${data['age']}`;
+                          gender.textContent = `Gender: ${data['gender']}`;
+                          enjoyment.textContent = `Enjoyment: ${data['enjoyment']}`;
+                          anger.textContent = `Anger: ${data['anger']}`;
+                          boredom.textContent = `Boredom: ${data['boredom']}`;
+                          anxiety.textContent = `Anxiety: ${data['anxiety']}`;
+                          creativity.textContent = `Creativity: ${data['creative']}`;
+                          curiosity.textContent = `Curiosity: ${data['curious']}`;
+                          tolerance.textContent = `Tolerance: ${data['tolerant']}`;
+                          persistence.textContent = `Persistence: ${data['persistent']}`;
+                          responsibility.textContent = `Responsibility: ${data['responsible']}`;
+                          selfcontrol.textContent = `Self Control: ${data['self_control']}`;
+                      }
+                  })
+                  .catch(error => {
+                      console.error('Error:', error);
+                  });
+              }
+        }
+
+        function showInfoBox(message) {
+            infoBox.style.display = 'flex';
+            infoBoxText.textContent = message;
+        }
+
+        function hideInfoBox() {
+            infoBox.style.display = 'none';
+        }
+
+        function enable_emoticons(list_of_states) {
+            for(let i = 0; i < list_of_states.length; i+= 2) {
+                state_1 = list_of_states[i]
+                state_2 = list_of_states[i+1]
+
+
+                if (state_1 == state_2) {
+                    if(state_1 === null) {
+                        student_emoticons[i].src = "../static/img/student_emoticons/transparent.png";
+                        student_emoticons[i+1].src = "../static/img/student_emoticons/transparent.png";
+                    }
+                    else {
+                        if (state_1 == 'distracted') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/distracted_left.png";
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/distracted_right.png";
+                        }
+                        else if (state_1 == 'raise_hand') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/ask_question.png";
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/ask_question.png";
+                        }
+                        else if (state_1 == 'respond_to_teacher') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/student_talking.png";
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/student_talking.png";
+                        }
+                        else if (state_1 == 'taking_notes') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/taking_notes.png";
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/taking_notes.png";
+                        }
+                    }
+                }
+                else {
+                    if (state_1 !== null) {
+                        if (state_1 == 'raise_hand') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/ask_question.png";
+                        } else if (state_1 == 'respond_to_teacher') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/student_talking.png";
+                        } else if (state_1 == 'taking_notes') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/taking_notes.png";
+                        } else if (state_1 == 'distracted') {
+                            student_emoticons[i].src = "../static/img/student_emoticons/distracted.png";
+                        }
+                    } else {
+                        student_emoticons[i].src = "../static/img/student_emoticons/transparent.png";
+                    }
+
+                    if (state_2 !== null) {
+                        if (state_2 == 'raise_hand') {
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/ask_question.png";
+                        } else if (state_2 == 'respond_to_teacher') {
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/student_talking.png";
+                        } else if (state_2 == 'taking_notes') {
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/taking_notes.png";
+                        } else if (state_2 == 'distracted') {
+                            student_emoticons[i+1].src = "../static/img/student_emoticons/distracted.png";
+                        }
+                    } else {
+                        student_emoticons[i+1].src = "../static/img/student_emoticons/transparent.png";
+                    }
+                }
+            }
+        }
+  </script>
+</body>
+</html>

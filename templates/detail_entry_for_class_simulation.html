@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body style="margin: 0px;">
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/main_page.css') }}" />
+    <div class="mainpage-container">
+      <div class="mainpage-container01"></div>
+       <div class="mainpage-teacher-details-container">
+           <div class="mainpage-teacherdetailsheader">
+                <h1>Enter Teacher Details:</h1>
+           </div>
+           <div class="mainpage-teachernameinput">
+                <span><span class="mainpage-text02">Teacher ID: </span><br /></span>
+           </div>
+           <div>
+                <input type="text" id="teacher_id" placeholder="Name" class="mainpage-textinput input" autocomplete="off"/>
+           </div>
+           <div class="mainpage-teachergenderinput">
+                <span class="mainpage-text02">Gender: </span>
+           </div>
+           <div>
+               <select id="teacher_gender" class='mainpage-teachergenderdropdown dropdown' name="Gender" id="gender">
+                   <option class='option-gender' value="" disabled selected>Select your Gender</option>
+                   <option class='option-gender' value="male">Male</option>
+                   <option class='option-gender' value="female">Female</option>
+               </select>
+           </div>
+           <div class="mainpage-teachergenderinput">
+                <span class="mainpage-text02">Student Class: </span>
+           </div>
+           <div>
+               <select id="student_year" class='mainpage-teachergenderdropdown dropdown' name="Student Year" id="student_year">
+                   <option class='option-gender' value="" disabled selected>Select Class to Teach</option>
+                   <option class='option-gender' value="Year 5">Year 5</option>
+                   <option class='option-gender' value="Year 6">Year 6</option>
+               </select>
+           </div>
+       </div>
+      <div class="mainpage-container2">
+          <div id="infoBox" class="info-box hidden">
+              <div id="infoBoxTextDiv" class="info-box-text-container">
+                <p id="infoBoxText" style="font-family: 'Verdana'"></p>
+              </div>
+              <div id="infoBoxButtonDiv" class="info-box-button-container">
+                <button onclick="hideInfoBox()">Close</button>
+              </div>
+          </div>
+      </div>
+      <div class="mainpage-containerbutton">
+        <button type="button" id='start_button' onclick='start_class_sim()' class="mainpage-start-button button">
+            <span>
+                <span>Start</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="mainpage-container2"></div>
+      <div class="containerbutton">
+        <button type="button" id='back_button' onclick='go_back_to_phase_selector()' class="mainpage-start-button button">
+            <span>
+                <span>Back</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="mainpage-container01"></div>
+    </div>
+  </div>
+  <script>
+      var teacher_id = document.getElementById('teacher_id');
+      var teacher_gender_dropdown = document.getElementById('teacher_gender');
+      var student_year_dropdown = document.getElementById('student_year');
+      var startButton = document.getElementById('start_button');
+
+      let infoBox = document.getElementById('infoBox');
+      let infoBoxText = document.getElementById('infoBoxText');
+
+      document.addEventListener('DOMContentLoaded', function() {
+          startButton.disabled = true;
+          teacher_id.disabled = true;
+
+          function updateButtonState() {
+              if (teacher_gender_dropdown.value !== '' && student_year_dropdown.value !== '') {
+                  startButton.disabled = false;
+              } else {
+                  startButton.disabled = true;
+              }
+          }
+
+          teacher_id.value = '{{ teacher_id }}';
+          teacher_gender_dropdown.value = '{{ teacher_gender }}';
+
+          if (teacher_gender_dropdown.value !== '' && student_year_dropdown.value !== '') {
+              startButton.disabled = false;
+          } else {
+              startButton.disabled = true;
+          }
+
+
+          teacher_gender_dropdown.addEventListener('change', updateButtonState);
+          student_year_dropdown.addEventListener('change', updateButtonState);
+      });
+
+      function start_class_sim() {
+
+            const teacher_details_input = JSON.stringify({"teacher_id": teacher_id.value, "teacher_gender": teacher_gender_dropdown.value, "student_year": student_year_dropdown.value})
+
+            fetch('/start_class_sim', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: teacher_details_input
+            }).then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => {
+                        showInfoBox(data.message);
+                    });
+                }
+
+                if (response.redirected) {
+                    window.location.href = response.url;
+                } else {
+                    // Handle non-redirect responses if needed
+                    console.log("Response received, but no redirect.");
+                }
+
+            })
+            .then(data => {
+
+            }).catch(error => {
+                  console.error('Error:', error);
+            });
+      }
+
+      function go_back_to_phase_selector() {
+          fetch('/go_back', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+          }).then(response => {
+              if (response.redirected) {
+                  window.location.href = response.url;
+              } else {
+                  // Handle non-redirect responses if needed
+                  console.log("Response received, but no redirect.");
+              }
+          }).then(data => {
+
+          }).catch(error => {
+              console.error('Error:', error);
+          });
+      }
+
+      function showInfoBox(message) {
+            infoBox.style.display = 'flex';
+            infoBoxText.textContent = message;
+      }
+
+      function hideInfoBox() {
+            infoBox.style.display = 'none';
+      }
+  </script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+<body style="margin: 0px;">
+  <div>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/choose_lesson_for_review_menu.css') }}" />
+    <div class="container">
+      <div class="container01"></div>
+       <div class="teacher-details-container">
+           <div class="lessonreviewheader">
+                <h1>Enter ID Assigned during Lesson Delivery:</h1>
+           </div>
+           <div class='reviewlessondiv'>
+               <div style="width: 30%;">
+                    <input type="text" id="teacher_id" placeholder="Assigned ID" class="mainpage-textinput input" autocomplete="off"/>
+               </div>
+           </div>
+           <!--div class="mainpage-teacher-details-container">
+               <div class="mainpage-teachergenderinput">
+                    <span class="mainpage-text02">Student Class: </span>
+               </div>
+               <div>
+                   <select id="student_year" class='mainpage-teachergenderdropdown dropdown' name="Student Year" id="student_year">
+                       <option class='option-gender' value="" disabled selected>Select Class to Teach</option>
+                       <option class='option-gender' value="Year 5">Year 5</option>
+                       <option class='option-gender' value="Year 6">Year 6</option>
+                   </select>
+               </div>
+           </div-->
+       </div>
+      <div class="container2">
+          <div id="infoBox" class="info-box hidden">
+              <div id="infoBoxTextDiv" class="info-box-text-container">
+                <p id="infoBoxText" style="font-family: 'Verdana'"></p>
+              </div>
+              <div id="infoBoxButtonDiv" class="info-box-button-container">
+                <button onclick="hideInfoBox()">Close</button>
+              </div>
+          </div>
+      </div>
+      <div class="containerbutton">
+        <button type="button" id='start_button' onclick='start_review()' class="start-button button">
+            <span>
+                <span>Start Review</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="container2"></div>
+      <div class="containerbutton">
+        <button type="button" id='back_button' onclick='go_back_to_phase_selector()' class="start-button button">
+            <span>
+                <span>Back</span>
+                <br />
+            </span>
+        </button>
+      </div>
+      <div class="container01"></div>
+    </div>
+  </div>
+  <script>
+      var teacher_id_input = document.getElementById('teacher_id');
+      // var student_year_dropdown = document.getElementById('student_year');
+      var startButton = document.getElementById('start_button');
+
+      let infoBox = document.getElementById('infoBox');
+      let infoBoxText = document.getElementById('infoBoxText');
+
+      document.addEventListener('DOMContentLoaded', function() {
+          startButton.disabled = true;
+
+          function updateButtonState() {
+              if (teacher_id_input.value !== '') {
+                  startButton.disabled = false; // Enable the button
+              } else {
+                  startButton.disabled = true;  // Disable the button
+              }
+          }
+
+          if (teacher_id_input.value !== '') {
+              startButton.disabled = false;
+          } else {
+              startButton.disabled = true;
+          }
+
+          teacher_id_input.addEventListener('input', updateButtonState);
+      });
+
+      function go_back_to_phase_selector() {
+          fetch('/go_back', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+          }).then(response => {
+              if (response.redirected) {
+                  window.location.href = response.url;
+              } else {
+                  // Handle non-redirect responses if needed
+                  console.log("Response received, but no redirect.");
+              }
+          }).then(data => {
+
+          }).catch(error => {
+              console.error('Error:', error);
+          });
+      }
+
+      function start_review() {
+          console.log(teacher_id_input.value);
+
+          // const teacher_id_value = JSON.stringify({"teacher_id": teacher_id_input.value, "student_year": student_year_dropdown.value});
+          const teacher_id_value = JSON.stringify({"teacher_id": teacher_id_input.value});
+
+          fetch('/start_lesson_review', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: teacher_id_value
+          }).then(response => {
+              console.log(response);
+
+              if (!response.ok) {
+                 return response.json().then(data => {
+                     console.log(data);
+                     showInfoBox(data.message);
+                 });
+              }
+
+              if (response.redirected) {
+                  window.location.href = response.url;
+              } else {
+                  // Handle non-redirect responses if needed
+                  console.log("Response received, but no redirect.");
+              }
+          }).then(data => {
+
+          }).catch(error => {
+              console.error('Error:', error);
+          });
+      }
+
+      function showInfoBox(message) {
+            infoBox.style.display = 'flex';
+            infoBoxText.textContent = message;
+      }
+
+      function hideInfoBox() {
+            infoBox.style.display = 'none';
+      }
+  </script>
+</body>
+</html>

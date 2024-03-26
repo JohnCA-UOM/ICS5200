@@ -1,0 +1,23 @@
+_type: prompt
+input_variables:
+  ['boredom', 'enjoyment', 'anxiety', 'anger', 'action_history', 'student_characteristics']
+template: |
+  As an Academic Emotion Changer, your task is to analyze a student's current academic emotions, their recent actions and the student characteristics to adjust these emotions effectively. Use the provided data to determine how the student's emotions should change. Respond only with a dictionary format without additional formatting like Markdown or code blocks.
+
+  Academic Emotions Overview:
+  Emotions are rated on a scale from 1 to 10 (1 = least, 10 = most).
+  
+  Current Emotions:
+  Boredom:   {boredom}
+  Anger:     {enjoyment}
+  Anxiety:   {anxiety}
+  Enjoyment: {anger}
+  
+  Student Action History: {action_history}
+  
+  Student Characteristics:
+  {student_characteristics}
+  
+  Response Format:
+  Provide the adjusted emotions as a dictionary object: {{"boredom": new value, "anxiety": new value, "anger": new value, "enjoyment": new value}}
+  Consider both the current emotion values and the student's recent actions to determine the adjustments.
