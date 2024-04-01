@@ -3,7 +3,7 @@ from typing import Optional
 from emotion import EmotionData
 
 
-class TickData():
+class TickData:
     emotions_original: Optional[EmotionData]
     emotions_updated: Optional[EmotionData]
     action_chosen: str
@@ -22,6 +22,7 @@ class TickData():
         self.tick = -1
         self.tick_finish_timestamp = 0.0
 
+    """ Print Tick Data in Format for Debugging """
     def print_log(self):
         print(f'Tick Data:\n'
               f'Student GUID: {self.agent_guid}\n'
@@ -33,6 +34,7 @@ class TickData():
               f'Tick: {self.tick}\n'
               f'Tick Finish Timestamp: {self.tick_finish_timestamp}')
 
+    """ Convert Tick Data Object to Dictionary for Saving """
     def to_obj(self):
         return {'agent_guid': self.agent_guid,
                 'emotions_original': self.emotions_original.to_obj(),

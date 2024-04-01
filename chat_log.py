@@ -1,7 +1,7 @@
 from typing import Optional, Dict, List
 
 
-class ChatLog():
+class ChatLog:
     person_type: str
     guid: str
     text: str
@@ -21,14 +21,17 @@ class ChatLog():
         self.question_suitability_resp = question_suitability_resp
         self.timestamp = timestamp
 
-
+    """ Print Chat Log in Format for Debugging """
     def print_log(self):
+        # If Chat Analysis Response is None, then don't print it and Question Suitability Response
+        # This is for User Inputs
         if self.chat_analysis_resp is None:
             print(f'Chat Log Data: Person Type: "{self.person_type}", '
                   f'guid: "{self.guid}" '
                   f'Text: "{self.text}", '
                   f'Tick: {self.tick}, '
                   f'Timestamp: {self.timestamp}')
+        # This is for Generated Responses from Student Agents
         else:
             print(f'Chat Log Data: Person Type: "{self.person_type}", '
                   f'guid: "{self.guid}" '
@@ -39,7 +42,11 @@ class ChatLog():
                   f'Chat Analysis Resp: {self.chat_analysis_resp}, '
                   f'Question Suitability Resp: {self.question_suitability_resp}, ')
 
+    """ Convert Chat Log Object to Dictionary for Saving """
     def to_obj(self):
+        # If Chat Analysis Response is None, then don't include it and Question Suitability Response in Conversion
+        # This is for User Inputs
+        # This is for User Inputs
         if self.chat_analysis_resp is None:
             return {
                 'person_type': self.person_type,
@@ -48,6 +55,7 @@ class ChatLog():
                 'tick': self.tick,
                 'timestamp': self.timestamp
             }
+        # This is for Generated Responses from Student Agents
         else:
             return {
                 'person_type': self.person_type,

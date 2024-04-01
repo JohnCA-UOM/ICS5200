@@ -18,24 +18,7 @@ class Persona():
     responsible: int
     self_control: int
 
-    def to_array(self):
-        return [
-            f"GUID: {self.guid}",
-            f"Name: {self.name}",
-            f"Age: {self.age}",
-            f"Gender: {self.gender}",
-            f"Enjoyment: {self.enjoyment}",
-            f"Anger: {self.anger}",
-            f"Anxiety: {self.anxiety}",
-            f"Boredom: {self.boredom}",
-            f"Creative: {self.creative}",
-            f"Curious: {self.curious}",
-            f"Tolerant: {self.tolerant}",
-            f"Persistent: {self.persistent}",
-            f"Responsible: {self.responsible}",
-            f"Self-Control: {self.self_control}"
-        ]
-
+    """ Converts Persona Object to Dictionary"""
     def to_obj(self):
         return {
             'guid': self.guid,
@@ -53,7 +36,3 @@ class Persona():
             'responsible': self.responsible,
             'self_control': self.self_control
         }
-
-
-    def id(self) -> str:
-        return self.guid

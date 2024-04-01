@@ -10,10 +10,12 @@ class EmotionData:
         self.anger = anger
         self.anxiety = anxiety
 
+    """ Print Emotions in Format for Debugging """
     def print_emotions(self):
         print(
             f'Emotions: Enjoyment: {self.enjoyment}, Boredom: {self.boredom}, Anger: {self.anger}, Anxiety: {self.anxiety}')
 
+    """ Convert Emotion Object to Dictionary for Saving """
     def to_obj(self):
         return {
             'enjoyment': self.enjoyment,
