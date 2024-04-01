@@ -1208,6 +1208,6 @@ if __name__ == "__main__":
     nest_asyncio.apply()
     #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
     #app.run(host="0.0.0.0", port=80, debug=True)
-    app.run(host="0.0.0.0", port=80, debug=True)
-    #app.run(host="studentsim.ddns.net", port=64354)
+    #app.run(host="0.0.0.0", port=80, debug=True)
+    app.run(host="studentsim.ddns.net", port=64354)
 
